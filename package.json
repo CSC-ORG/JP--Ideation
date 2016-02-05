@@ -1,6 +1,6 @@
 {
   "name": "ideation",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -12,6 +12,17 @@
     "express": "~4.13.1",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "mongodb":"*",
+    "monk":"*",
+    "connect-flash":"*",
+    "express-validator":"*",
+    "express-session":"*",
+    "express-messages":"*",
+    "multer": "~0.1.8",
+    "moment":"*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-local": "*"
   }
 }

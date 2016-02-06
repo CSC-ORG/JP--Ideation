@@ -3,8 +3,24 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+//var bodyParser = require('body-parser');
 
+//require modules
+var expressValidator = require('express-validator');
+var session = require('express-session');
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
+var bodyParser = require('body-parser');
+// File upload helper
+var multer = require('multer');
+var flash = require('connect-flash');
+
+// Mongo stuff
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
+var db = mongoose.connection;
+
+//Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -14,13 +30,69 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+
+//Middlwares custom
+// handle file uploads
+app.use(multer({dest:'./public/images/uploads'}));
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
+//Middlwares custom
+//Handle express sessions
+app.use(session({
+  secret:'secret',
+  saveUninitialize: true,
+  resave: true
+}));
+
+// Passport session is  after express session
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Validator
+app.use(expressValidator({
+
+  errorFormattor: function(param, msg, value){
+    var namespace = param.split('.'),
+    root = namespace.shift(),
+    formParam = root;
+
+    while(namespace.length){
+      formParam+= '[' + namespace.shift() + ']';
+    }
+
+    return{
+      param: formParam,
+      msg: msg,
+      value: value
+    };
+  }
+}));
+
+//
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// connect flash
+app.use(flash());
+app.use(function (req, res, next){
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+//
+
+//User available at all pages
+app.get('/*', function(req, res, next){
+  res.locals.user = req.user || null;
+  next();
+});
+//
 
 app.use('/', routes);
 app.use('/users', users);

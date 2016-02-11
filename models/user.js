@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-mongoose.connect('mongodb://localhost/nodeauth');
+mongoose.connect('mongodb://localhost/ideation');
 
 var db = mongoose.connection;
 
@@ -27,3 +27,5 @@ var UserSchema = mongoose.Schema({
 		type: String
 	}
 });
+
+

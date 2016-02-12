@@ -23,6 +23,7 @@
     "moment":"*",
     "mongoose": "*",
     "passport": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "bcrypt":"*"
   }
 }

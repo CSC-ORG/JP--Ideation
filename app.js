@@ -18,7 +18,7 @@ var flash = require('connect-flash');
 // Mongo stuff
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-var db = mongoose.connection;
+var db = require('monk')('localhost/nodeblog');
 
 //Routes
 var routes = require('./routes/index');
@@ -85,6 +85,14 @@ app.use(function (req, res, next){
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
+//
+
+//Make db accesible to our router
+app.use(function(req, res, next){
+  req.db = db;
+  next();
+});
+
 //
 
 //User available at all pages

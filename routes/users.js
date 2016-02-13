@@ -104,10 +104,11 @@ router.post('/register', function (req, res,next){
 
 
 passport.serializeUser(function(user, done){
-	done(null, user.id);
+	done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done){
+	
 	User.getUserById(id, function(err, user){
 		done(err, user);
 	})
@@ -116,7 +117,8 @@ passport.deserializeUser(function(id, done){
 passport.use(new localStrategy(
 
 		function(username, password, done){
-			db.users.findOne({
+			var users = db.get('users');
+			users.findOne({
 				username: username
 			}, function (err, user){
 				if(err) return done(err);
@@ -144,6 +146,19 @@ passport.use(new localStrategy(
 
 		}
 	));
+
+//Post login route
+router.post('/login', passport.authenticate('local', {
+	failureRedirect:'/users/login',
+	failureFlash:'Invalid Username or Password'
+}), function (req, res, next){
+	console.log('Authentication Successful');
+	req.flash('success', 'You are logged in');
+	res.location('/');
+	res.redirect('/');
+});
+
+
 
 
 

@@ -6,6 +6,10 @@ var bcrypt = require('bcrypt');
 var mongo = require('mongodb');
 var db = require('monk')('localhost/ideation');
 
+// require passport and local startegy
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
+
 /* GET users listing. */
 /*router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -71,12 +75,12 @@ router.post('/register', function (req, res,next){
 		});
 	}else{
 
-	var user = db.get('users');
+	var users = db.get('users');
 	bcrypt.hash(password, 10, function (err, hash){
 		if(err) throw err;
 		//Set hashed password
 		password = hash;
-		user.insert({
+		users.insert({
 			name: name,
 			email: email,
 			username: username,
@@ -97,6 +101,49 @@ router.post('/register', function (req, res,next){
 
 
 });
+
+
+passport.serializeUser(function(user, done){
+	done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done){
+	User.getUserById(id, function(err, user){
+		done(err, user);
+	})
+});
+
+passport.use(new localStrategy(
+
+		function(username, password, done){
+			db.users.findOne({
+				username: username
+			}, function (err, user){
+				if(err) return done(err);
+				if(!user){
+					console.log('Unknown User');
+					return done(null, false, {
+						message: 'Unknown User'
+					});
+				}
+
+				bcrypt.compare(password, user.password, function(err, isMatch){
+					if(err) return done(err);
+					if(isMatch){
+						return done(null, user);
+					}else{
+						console.log('Invalid Password');
+						return done(null, false, {
+							message:'Invalid Password'
+						});
+					}
+				});
+
+
+			});
+
+		}
+	));
 
 
 

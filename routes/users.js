@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var bcrypt = require('bcrypt');
 
-var User = require('../models/user.js');
+//var User = require('../models/user.js');
+var mongo = require('mongodb');
+var db = require('monk')('localhost/ideation');
 
 /* GET users listing. */
 /*router.get('/', function(req, res, next) {
@@ -68,25 +71,28 @@ router.post('/register', function (req, res,next){
 		});
 	}else{
 
-		var newUser = new User({
+	var user = db.get('users');
+	bcrypt.hash(password, 10, function (err, hash){
+		if(err) throw err;
+		//Set hashed password
+		password = hash;
+		user.insert({
 			name: name,
 			email: email,
 			username: username,
 			password: password,
 			profileimage: profileImageName
+		}, function (err, user){
+			if(err){
+				res.send('There was an issue in registration');
+			}else{
+				req.flash('success', 'Created account for: '+ name + ', You may log in');
+				res.location('/');
+				res.redirect('/');
+			}
 		});
+	});
 
-		// Create User
-		User.createUser(newUser, function (err, user){
-			if(err) throw err;
-			console.log(user);
-
-		});
-
-		//Success Message
-		req.flash('success', 'You are now registered and may log in');
-		res.location('/');
-		res.redirect('/');
 	}
 
 

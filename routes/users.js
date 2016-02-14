@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt');
 
 //var User = require('../models/user.js');
 var mongo = require('mongodb');
-var db = require('monk')('localhost/ideation');
+var User = require('../models/user.js');
 
 // require passport and local startegy
 var passport = require('passport');
@@ -75,27 +75,25 @@ router.post('/register', function (req, res,next){
 		});
 	}else{
 
-	var users = db.get('users');
-	bcrypt.hash(password, 10, function (err, hash){
-		if(err) throw err;
-		//Set hashed password
-		password = hash;
-		users.insert({
+		var newUser = new User({
 			name: name,
 			email: email,
 			username: username,
 			password: password,
 			profileimage: profileImageName
-		}, function (err, user){
-			if(err){
-				res.send('There was an issue in registration');
-			}else{
-				req.flash('success', 'Created account for: '+ name + ', You may log in');
-				res.location('/');
-				res.redirect('/');
-			}
 		});
-	});
+
+		// Create User
+		User.createUser(newUser, function (err, user){
+			if(err) throw err;
+			console.log(user);
+
+		});
+
+		//Success Message
+		req.flash('success', 'You are now registered and may log in');
+		res.location('/');
+		res.redirect('/');
 
 	}
 
@@ -104,48 +102,43 @@ router.post('/register', function (req, res,next){
 
 
 passport.serializeUser(function(user, done){
-	done(null, user._id);
+	done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done){
 	
 	User.getUserById(id, function(err, user){
 		done(err, user);
-	})
+	});
 });
 
 passport.use(new localStrategy(
 
-		function(username, password, done){
-			var users = db.get('users');
-			users.findOne({
-				username: username
-			}, function (err, user){
-				if(err) return done(err);
-				if(!user){
-					console.log('Unknown User');
-					return done(null, false, {
-						message: 'Unknown User'
-					});
-				}
-
-				bcrypt.compare(password, user.password, function(err, isMatch){
-					if(err) return done(err);
-					if(isMatch){
-						return done(null, user);
-					}else{
-						console.log('Invalid Password');
-						return done(null, false, {
-							message:'Invalid Password'
-						});
-					}
+		// username, password, callback
+	function(username, password, done){
+		User.getUserByUsername(username, function(err, user){
+			if(err) throw err;
+			if(!user){
+				console.log('Unknown User');
+				return done(null, false, {
+					message: 'unknown User'
 				});
+			}
 
-
-			});
-
-		}
-	));
+			User.comparePassword(password, user.password, function (err, isMatch){
+				if(err) throw err;
+				if(isMatch){
+					return done(null, user);
+				}else{
+					console.log('Invalid password');
+					return done(null, false, {
+						message: 'Invalid Password'
+					})
+				}
+			})
+		});	
+	}
+));
 
 //Post login route
 router.post('/login', passport.authenticate('local', {

@@ -18,7 +18,7 @@ var flash = require('connect-flash');
 // Mongo stuff
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-var db = require('monk')('localhost/nodeblog');
+var db = mongoose.connection;
 
 //Routes
 var routes = require('./routes/index');

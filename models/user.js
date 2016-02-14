@@ -28,6 +28,8 @@ var UserSchema = mongoose.Schema({
 	}
 });
 
+var User = module.exports = mongoose.model('User', UserSchema);
+
 //Function to handle
 module.exports.createUser = function(newUser, callback){
 	//newUserpassword, salt, callbackfunction

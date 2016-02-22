@@ -4,6 +4,8 @@ html
         title Zirine: #{title}
         link(rel='stylesheet', href='/stylesheets/bootstrap.css')
         link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/animate.css')
+        link(rel='stylesheet', href='/stylesheets/font-awesome.css')
     body
         nav.navbar.navbar-inverse.navbar-fixed-top
             .container
@@ -16,9 +18,12 @@ html
                     a.navbar-brand(href='#') Zirine
                 #navbar.collapse.navbar-collapse
                     ul.nav.navbar-nav
-                        li(class=(title=='Members'? 'active':''))
-                            a(href='/') Members
+                        if user
+                          li(class=(title=='Members Area'? 'active':''))
+                             a(href='/') Members Area
                         if !user
+                            li(class=(title=='Home'? 'active':''))
+                              a(href='/home') Home
                             li(class=(title=='Register'? 'active':''))
                                 a(href='/users/register') Register
                             li(class=(title=='Login'? 'active': ''))
@@ -75,3 +80,7 @@ html
  
     script(src='../javascripts/jquery.min.js')
     script(src='../javascripts/bootstrap.js')
+    script(src='../javascripts/wow.js')
+    |               
+    script.
+      new WOW().init()

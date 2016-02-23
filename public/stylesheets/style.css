@@ -40,9 +40,18 @@ ul.error li{
 
 /* Flash Messages end */
 
+/*Register and login layout fix */
 .layo{
 	margin-top: 50px;
+}
+.registerlayo{
+	margin-top: 50px;
 	margin-bottom: 30px;
+}
+
+.loginlayo{
+	margin-top: 50px;
+	margin-bottom:165px;
 }
 
 /*NAVIGATION*/
@@ -51,10 +60,6 @@ ul.error li{
  background-color:#242424;
  border-bottom:1px solid #b9b9b9;
  font-family: 'Lato', sans-serif;
-}
-
-.navbar a {
- color:#cccccc !important;
 }
 
 .navbar a:hover {
@@ -70,6 +75,7 @@ ul.error li{
 .navbar-default .nav li.active a{
 	color:#1d1d1d !important;
 }
+
 
 
 

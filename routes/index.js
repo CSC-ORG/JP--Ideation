@@ -6,7 +6,7 @@ function ensureAuthenticated(req, res, next){
 	if(req.isAuthenticated()){
 		return next();
 	}	
-	res.redirect('/users/login');
+	res.redirect('/home');
 }
 
 /* GET home page. */

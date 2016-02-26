@@ -19,12 +19,18 @@ var flash = require('connect-flash');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var db = mongoose.connection;
+var database = require('monk')('localhost/nodeblog');
 
 //Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var posts = require('./routes/posts');
+var categories = require('./routes/categories');
 
 var app = express();
+
+//Moment
+app.locals.moment = require('moment');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -89,7 +95,7 @@ app.use(function (req, res, next){
 
 //Make db accesible to our router
 app.use(function(req, res, next){
-  req.db = db;
+  req.db = database;
   next();
 });
 

@@ -17,9 +17,9 @@ var flash = require('connect-flash');
 
 // Mongo stuff
 var mongo = require('mongodb');
-var mongoose = require('mongoose');
-var db = mongoose.connection;
-var database = require('monk')('localhost/ideation');
+//var mongoose = require('mongoose');
+//var db = mongoose.connection;
+var db = require('monk')('localhost/ideation');
 
 //Routes
 var routes = require('./routes/index');
@@ -95,7 +95,8 @@ app.use(function (req, res, next){
 
 //Make db accesible to our router
 app.use(function(req, res, next){
-  req.db = database;
+  req.db = db;
+  //console.log(req.db);
   next();
 });
 

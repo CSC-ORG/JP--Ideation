@@ -5,6 +5,8 @@ var database = require('monk')('localhost/ideation');
 
 router.get('/add', function (req, res, next){
 	var categories = database.get('categories');
+	var user = req.user;
+	req.flash('info', 'All posts will be automatically deleted within 7 days. If you want to change the deletion date, please visit published post section after publishing the post.');
 	categories.find({}, {}, function (err, categories){
 		res.render('addpost', {
 			"title":"Add post",
@@ -16,7 +18,7 @@ router.get('/add', function (req, res, next){
 
 router.post('/add', function (req, res, next){
 
-	var title = req.body.tile;
+	var title = req.body.title;
 	var category = req.body.category;
 	var body = req.body.body;
 	var author = req.body.author;
@@ -61,9 +63,9 @@ router.post('/add', function (req, res, next){
 			if(err){
 				res.send('There was an issue submitting the post to admin.');
 			}else{
-				req.flash('success', 'Post Submitted');
-				req.location('/');
-				req.redirect('/');
+				req.flash('success', 'Post Submitted to admin, Once reviewed it will be published');
+				res.location('/');
+				res.redirect('/');
 			}
 		});
 	}

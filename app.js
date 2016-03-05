@@ -32,6 +32,13 @@ var app = express();
 //Moment
 app.locals.moment = require('moment');
 
+//Global function so that some text is shown in front end
+app.locals.truncateText = function(text, length){
+  var truncatedText = text.substring(0, length);
+  return truncatedText;
+}
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

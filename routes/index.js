@@ -14,7 +14,7 @@ function ensureAuthenticated(req, res, next){
 /* GET home page. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
   var db = req.db;
-  var posts = db.get('posts');
+  var posts = db.get('adminposts');
   var categories = db.get('admincategories');
   posts.find({},{},function(err, posts){
     

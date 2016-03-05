@@ -3,6 +3,8 @@ var router = express.Router();
 var mongo = require('mongodb');
 var database = require('monk')('localhost/ideation');
 
+
+
 router.get('/add', function(req, res, next) {
  	res.render('addcategory', {
  		"title": "Add Category"

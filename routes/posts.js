@@ -1,10 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
-var database = require('monk')('localhost/ideation');
+var db = require('monk')('localhost/ideation');
+
+
+router.get('/show/:id', function(req, res, next){
+	var db = req.db;
+	var user = req.user;
+	var posts = db.get('adminposts');
+	posts.findById(req.params.id, function(err, post){
+		res.render('show', {
+			"post": post
+		});
+	});
+});
+
 
 router.get('/add', function (req, res, next){
-	var categories = database.get('categories');
+	var categories = db.get('categories');
 	var user = req.user;
 	req.flash('info', 'All posts will be automatically deleted within 7 days. If you want to change the deletion date, please visit published post section after publishing the post.');
 	categories.find({}, {}, function (err, categories){
@@ -49,7 +62,7 @@ router.post('/add', function (req, res, next){
 			"body": body
 		});
 	}else{
-		var adminpost = database.get('adminposts');
+		var adminpost = db.get('adminposts');
 
 		//Submit to admindb
 		adminpost.insert({
@@ -68,6 +81,66 @@ router.post('/add', function (req, res, next){
 				res.redirect('/');
 			}
 		});
+	}
+
+});
+
+//Add comment
+router.post('/addcomment', function(req, res, next){
+	//Get form values
+	var name        = req.body.name;
+	var email 		= req.body.email;
+	var body		= req.body.body;
+	var postid 		= req.body.postid;
+	var commentdate 		= new Date();
+
+
+	//Validation
+	req.checkBody('name', 'Name field is required').notEmpty();
+	req.checkBody('email', 'Email field is required').notEmpty();
+	req.checkBody('email', 'Provide a valid email').isEmail();
+	req.checkBody('body', 'Body field is required').notEmpty();
+
+	// Check errors
+	var errors = req.validationErrors();
+	var posts = db.get('adminposts');
+	if(errors){
+		
+		posts.findById(postid, function(err, post){
+			res.render('show', {
+			"errors": errors,
+			"posts": post,
+			
+			});
+		});
+		
+	}else{
+		var comment = {
+			"name": name,
+			"email": email,
+			"body": body,
+			"commentdate": commentdate
+		}
+
+
+		posts.update({
+			"_id": postid
+		},
+		{
+			$push: {
+				'comments': comment
+			}
+		},
+		function(err, doc){
+				if(err) 
+					throw err;
+				else{
+					req.flash('success','Comment Added');
+					res.location('/posts/show/' + postid);
+					res.redirect('/posts/show/' + postid);
+				}
+			}
+		);
 	}
 
 });

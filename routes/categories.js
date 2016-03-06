@@ -3,7 +3,22 @@ var router = express.Router();
 var mongo = require('mongodb');
 var database = require('monk')('localhost/ideation');
 
-
+router.get('/show/:category', function(req, res, next){
+	var db = req.db;
+	var posts = db.get('adminposts');
+	var categories = db.get('admincategories');
+	posts.find({category: req.params.category}, {}, function(err, posts){
+		
+		categories.find({},{}, function(err, categories){
+			if(err) throw err;
+			res.render('index', {
+			"title": req.params.category,
+			"posts": posts,
+			"categories": categories
+			});
+		});
+	});
+});
 
 router.get('/add', function(req, res, next) {
  	res.render('addcategory', {

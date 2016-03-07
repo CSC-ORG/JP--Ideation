@@ -27,6 +27,7 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
   });
 });
 
+
 router.get('/home', function(req, res, next) {
   res.render('externalindex', { title: 'Home' });
 });

@@ -1,7 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
-var database = require('monk')('localhost/ideation');
+var db = require('monk')('localhost/ideation');
+
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 router.get('/show/:category', function(req, res, next){
 	var db = req.db;
@@ -39,22 +44,34 @@ router.post('/add', function(req, res, next){
 			"title": title
 		});
 	}else{
-		var categories = database.get('admincategories');
-	}	
+		var categories = db.get('admincategories');
+	}
 
-	//Submit to db
-	categories.insert({
-		"title": title
-	}, function (err, category){
-		if(err){
-			res.send('There was an issue adding the category');
-
-		}else{
-			req.flash('success','Category submitted to admin');
-			res.location('/');
-			res.redirect('/');
-		}
+	title = title.toLowerCase();
+	title = capitalizeFirstLetter(title);
+	//console.log(title);
+	categories.find({'title': title}, {}, function(err, category){
+			if(err) throw err;
+			if(category.length != 0){
+				req.flash('info', 'Category already exists, try submitting another category');
+				res.redirect('/categories/add');
+			}else{
+				//Submit to db
+				categories.insert({
+				"title": title
+				}, function (err, category){
+				if(err){
+					res.send('There was an issue adding the category');
+				}else{
+				req.flash('success','Category submitted');
+				res.location('/');
+				res.redirect('/');
+				}
+				});
+			}
 	});
+
+	
 });
 
 module.exports = router;

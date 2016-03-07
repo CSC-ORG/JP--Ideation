@@ -4,7 +4,7 @@ block content
 	.show
 		h1= post.title
 		p.meta Posted in 
-				a(href='/show/#{post.category}') #{post.category} by #{post.author} on #{moment(post.date).format("MM-DD-YYYY")}
+				a(href='/categories/show/#{post.category}') #{post.category} by #{post.author} on #{moment(post.date).format("MM-DD-YYYY")}
 		img(src='/images/uploads/#{post.mainimage}')
 		!=post.body
 		br

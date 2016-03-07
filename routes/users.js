@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt');
 //var User = require('../models/user.js');
 var mongo = require('mongodb');
 var User = require('../models/user.js');
+var db = require('monk')('localhost/ideation');
 
 // require passport and local startegy
 var passport = require('passport');
@@ -139,6 +140,16 @@ passport.use(new localStrategy(
 		});	
 	}
 ));
+
+
+
+router.get('/profile', function(req, res, next){
+	var user = req.user;
+	res.render('profile', {
+		"user": user,
+		"title": "Profile"
+	});
+});
 
 //Post login route
 router.post('/login', passport.authenticate('local', {

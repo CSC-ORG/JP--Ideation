@@ -1,0 +1,62 @@
+extends layout
+
+block content
+    h1.page-header=title
+    ul.errors
+       if errors
+           each error, i in errors
+              li.alert.alert-danger #{error.msg}
+    .container.text-center
+      |   
+      .row
+        .col-md-4.col-sm-6.col-xs-12
+          .text-center
+            img.avatar.img-circle.img-thumbnail(src='/images/uploads/#{user.profileimage}')         
+        // edit form column
+        .col-md-8.col-sm-6.col-xs-12.personal-info
+          h3 Personal info
+          |       
+          form.form-horizontal(method='post', action='updateprofile', enctype='multipart/form-data')
+            .form-group
+              h6 Upload a different photo...
+              |         
+              input.text-center.center-block.well.well-sm(name='profileimage', type='file')
+            .form-group
+              label.col-lg-3.control-label Name
+              |           
+              .col-lg-8
+                input.form-control(value='#{user.name}', type='text', name='name')
+            |         
+            .form-group
+              label.col-lg-3.control-label Email:
+              |           
+              .col-lg-8
+                input.form-control(value='#{user.email}', readonly, type='email', name='email')
+            |         
+            .form-group
+              label.col-md-3.control-label Username:
+              |           
+              .col-md-8
+                input.form-control(placeholder='#{user.username}' value="#{user.username}", readonly, type='text', name='username')
+            |         
+            .form-group
+              label.col-md-3.control-label Password:
+              |           
+              .col-md-8
+                input.form-control(placeholder='********', type='password', name='password')
+            |         
+            .form-group
+              label.col-md-3.control-label Confirm password:
+              |           
+              .col-md-8
+                input.form-control(placeholder='********', type='password', name='password2')
+            |         
+            .form-group
+              label.col-md-3.control-label
+              |           
+              .col-md-8
+                input.btn.btn-primary(value='Save Changes', type='Submit', name='submit')
+                |             
+                span
+                |             
+                input.btn.btn-default(value='Cancel', type='reset')

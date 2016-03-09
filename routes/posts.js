@@ -17,7 +17,7 @@ router.get('/show/:id', function(req, res, next){
 
 
 router.get('/add', function (req, res, next){
-	var categories = db.get('categories');
+	var categories = db.get('admincategories');
 	var user = req.user;
 	req.flash('info', 'All posts will be automatically deleted within 7 days. If you want to change the deletion date, please visit published post section after publishing the post.');
 	categories.find({}, {}, function (err, categories){

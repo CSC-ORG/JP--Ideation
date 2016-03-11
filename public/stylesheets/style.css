@@ -11,6 +11,101 @@ p, h1 {
  font-family: 'Droid Sans', sans-serif;
 }
 
+/* custom */
+body {
+  font-family: arial;
+  font-size: 15px;
+  /*Light Grey */
+  background: #f4f4f4;
+  /* Dark Grey */
+  color:#666;
+}
+
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    margin-bottom: 30px;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    margin-bottom: 30px;
+}
+
+.logo{
+	text-align:center;
+	margin:auto;
+	display:block;
+}
+
+
+.clr{
+	/* clear floats */
+	clear:both;
+}
+
+ul{
+	padding: 0;
+	margin:0;
+}
+
+h1,h2,h3,p{
+	padding: 5px 0;
+	margin-bottom: 0px;
+}
+
+p{
+	margin:0;
+}
+
+a{
+	text-decoration: none;
+}
+
+/* Add form */
+
+
+input, select, textarea{
+	margin-bottom: 15px;
+}
+label{
+	display:inline-block;
+	width:180px;
+}
+
+input[type='text'], input[type='email'],select, textarea{
+	paddding:3px;
+	height:35px;
+	width:cover;
+	border:1px #ccc solid;
+}
+
+select{
+	height: 28px;
+}
+
+textarea{
+	height: 70px;
+	width:400px;
+}
+/* End Add form */
+
+
+/* Image inside the container */
+.post img{
+	width:50%;
+	height:50%;
+	margin-bottom: 20px;
+}
+
+.post{
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 20px;
+}
+/* End Image Inside container */
+
 /* Flash Messages */
 ul.success li, ul.info li, ul.error li{
 	margin:20px 0 20px 0;
@@ -60,6 +155,7 @@ ul.error li{
  background-color:#242424;
  border-bottom:1px solid #b9b9b9;
  font-family: 'Lato', sans-serif;
+
 }
 
 .navbar a:hover {
@@ -157,3 +253,20 @@ ul.error li{
 }
 
 /* End Footer */
+
+
+/* comment form */
+.comment-form{
+	margin:30px 0;
+}
+
+.comment{
+	background: #ccc;
+	padding:5px;
+	border:#666 solid 1px;
+	margin:15px 0 20px;
+}
+
+.comment-name{
+	font-weight: bold;
+}

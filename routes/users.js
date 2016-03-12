@@ -16,6 +16,14 @@ var localStrategy = require('passport-local').Strategy;
   res.send('respond with a resource');
 });*/
 
+function ensureAuthenticated(req, res, next){
+	//Passport Authentication API
+	if(req.isAuthenticated()){
+		return next();
+	}	
+	res.redirect('/home');
+}
+
 router.get('/register', function(req, res, next){
 	res.render('register', {
 		'title': 'Register'
@@ -143,14 +151,14 @@ passport.use(new localStrategy(
 
 
 
-router.get('/updateprofile', function(req, res, next){
+router.get('/updateprofile', ensureAuthenticated, function(req, res, next){
 	var user = req.user;
 	res.render('profile', {
 		"title": "Edit Profile"
 	});
 });
 
-router.post('/updateprofile', function (req, res, next){
+router.post('/updateprofile',ensureAuthenticated, function (req, res, next){
 	//Get the form values
 	var name = req.body.name;
 	var email = req.body.email;
@@ -237,7 +245,7 @@ router.post('/login', passport.authenticate('local', {
 });
 
 
-router.get('/logout', function (req, res, next){
+router.get('/logout', ensureAuthenticated, function (req, res, next){
 	req.logout();
 	req.flash('success', 'You have logged out successfully');
 	res.location('/home');

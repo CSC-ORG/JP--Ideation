@@ -8,7 +8,15 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-router.get('/show/:category', function(req, res, next){
+function ensureAuthenticated(req, res, next){
+	//Passport Authentication API
+	if(req.isAuthenticated()){
+		return next();
+	}	
+	res.redirect('/home');
+}
+
+router.get('/show/:category',ensureAuthenticated, function(req, res, next){
 	var db = req.db;
 	var posts = db.get('adminposts');
 	var categories = db.get('admincategories');
@@ -25,13 +33,13 @@ router.get('/show/:category', function(req, res, next){
 	});
 });
 
-router.get('/add', function(req, res, next) {
+router.get('/add', ensureAuthenticated, function(req, res, next) {
  	res.render('addcategory', {
  		"title": "Add Category"
  	})
 });
 
-router.post('/add', function(req, res, next){
+router.post('/add',ensureAuthenticated, function(req, res, next){
 	var title = req.body.title;
 
 	req.checkBody('title', 'Title Field is required').notEmpty();

@@ -3,8 +3,15 @@ var router = express.Router();
 var mongo = require('mongodb');
 var db = require('monk')('localhost/ideation');
 
+function ensureAuthenticated(req, res, next){
+	//Passport Authentication API
+	if(req.isAuthenticated()){
+		return next();
+	}	
+	res.redirect('/home');
+}
 
-router.get('/show/:id', function(req, res, next){
+router.get('/show/:id', ensureAuthenticated, function(req, res, next){
 	var db = req.db;
 	var user = req.user;
 	var posts = db.get('adminposts');
@@ -16,20 +23,20 @@ router.get('/show/:id', function(req, res, next){
 });
 
 
-router.get('/add', function (req, res, next){
+router.get('/add', ensureAuthenticated, function (req, res, next){
 	var categories = db.get('admincategories');
 	var user = req.user;
 	req.flash('info', 'All posts will be automatically deleted within 7 days. If you want to change the deletion date, please visit published post section after publishing the post.');
 	categories.find({}, {}, function (err, categories){
 		res.render('addpost', {
-			"title":"Add post",
+			"title":"Add Idea",
 			"categories": categories
 		});
 	});
 });
 
 
-router.post('/add', function (req, res, next){
+router.post('/add', ensureAuthenticated, function (req, res, next){
 
 	var title = req.body.title;
 	var category = req.body.category;
@@ -86,7 +93,7 @@ router.post('/add', function (req, res, next){
 });
 
 //Add comment
-router.post('/addcomment', function(req, res, next){
+router.post('/addcomment', ensureAuthenticated, function(req, res, next){
 	//Get form values
 	var name        = req.body.name;
 	var email 		= req.body.email;

@@ -19,7 +19,7 @@ var flash = require('connect-flash');
 var mongo = require('mongodb');
 //var mongoose = require('mongoose');
 //var db = mongoose.connection;
-var db = require('monk')('localhost/ideation');
+var db = require('monk')('mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation');
 
 //Routes
 var routes = require('./routes/index');

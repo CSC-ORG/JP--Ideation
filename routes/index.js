@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
-var db = require('monk')('mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation');
+var db = require('monk')('mongodb://localhost/ideation');
 
 function ensureAuthenticated(req, res, next){
 	//Passport Authentication API

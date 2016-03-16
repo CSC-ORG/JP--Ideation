@@ -6,13 +6,17 @@ html
         link(rel='stylesheet', href='/stylesheets/style.css')
         link(rel='stylesheet', href='/stylesheets/animate.css')
         link(rel='stylesheet', href='/stylesheets/font-awesome.css')
-        link(href='https://fonts.googleapis.com/css?family=Lato', rel='stylesheet', type='text/css')
-        link(href='https://fonts.googleapis.com/css?family=Pacifico', rel='stylesheet', type='text/css')
-        link(href='https://fonts.googleapis.com/css?family=Droid+Sans', rel='stylesheet', type='text/css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap-material-design.css')
+        link(rel='stylesheet', href='/stylesheets/ripples.css')
+        link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700')
+        link(rel='stylesheet', href='https://fonts.googleapis.com/icon?family=Material+Icons')
+        link(rel='stylesheet', href='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css')
+        link(rel='stylesheet', type='text/css', href='/stylesheets/animate.min.css')
+        
 
     body
         nav.navbar.navbar-inverse.navbar-fixed-top
-            .container
+            .container-fluid
                 .navbar-header
                     button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
                         span.sr-only Toggle navigation
@@ -49,39 +53,8 @@ html
                                  |                   
                                  li.logout
                                    a(href='/users/logout') LogOut
-        .container.layo
-           !=messages()
-           block content
-
-        .footer
-          .container
-            .row
-              .col-lg-4.col-md-4
-                 h1 Zirine
-                 | &#x9;&#x9;&#x9;&#x9;
-                 p Since 2015
-                 | &#x9;&#x9;&#x9;&#x9;
-                 p
-                 em Delivering ideas and solutions.
-                 | &#x9;&#x9;&#x9;&#x9;
-                 | &#x9;&#x9;&#x9;&#x9;
-              .col-lg-4.col-md-4
-                 h1 GET IN TOUCH:
-                 | &#x9;&#x9;&#x9;&#x9;
-                 p
-                   i.fa.fa-phone
-                   |  011111 222 333
-                 | &#x9;&#x9;&#x9;&#x9;
-                 p
-                   i.fa.fa-envelope-o
-                 |  
-                 a(href='mailto:info@appname.com') info@appname.com
-                 | &#x9;&#x9;&#x9;&#x9;
-                 | &#x9;&#x9;&#x9;&#x9;
-              .col-lg-4.col-md-4
-                 h1 ABOUT US:
-                 | &#x9;&#x9;&#x9;&#x9;
-                 p Zirine &copy; 2015
+        
+        block content
 
  
     script(src='/javascripts/jquery.min.js')
@@ -90,3 +63,13 @@ html
     |               
     script.
       new WOW().init()
+    script(src='../javascripts/jquery.min.js')
+    script(src='../javascripts/ripples.js')
+    script(src='../javascripts/material.js')
+    script(src='../javascripts/script.js')
+    script(src='../javascripts/bootstrap.js')
+    script(src='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js')
+    script(src='../javascripts/wow.min.js')
+    script
+      | $.material.init()

@@ -1,30 +1,40 @@
 extends layout
 
 block content
-  .container.col-lg-12.registerlayo
-    h1 Register
-    p Please register using the form below
-    ul.errors
-      if errors
-        each error, i in errors
-          li.alert.alert-danger #{error.msg}
-    form(method='post', action='register',enctype='multipart/form-data')
-      .form-group
-        label Name
-          input.form-control(name='name', type='text', placeholder='Enter a name')
-      .form-group
-        label Email
-          input.form-control(name='email', type='email', placeholder='Enter Email')
-      .form-group
-        label Username
-          input.form-control(name='username', type='text', placeholder='Username')
-      .form-group
-        label Password
-          input.form-control(name='password', type='password', placeholder='Enter Password')
-      .form-group
-        label Confirm Passowrd
-          input.form-control(name='password2', type='password', placeholder='Confirm')
-      .form-group
-        label Profile Image
-          input.form-control(name='profileimage', type='file')
-      input.btn.btn-default(name='submit', type='submit', value='Register') 
+  !=messages()
+  ul.errors
+   if errors
+     each error, i in errors
+       .alert.alert-dismissible.alert-danger
+          button.close(type='button', data-dismiss='alert') ×
+          a #{error.msg}
+  .container.well.col-lg-6.col-lg-offset-3.register
+    form.form-horizontal(action='register', method='post' , enctype='multipart/form-data')
+      fieldset
+        legend.head #{title}
+        .form-group
+          label.col-md-2.control-label(for='name') Name
+          .col-md-10
+            input#name.form-control(type='text', placeholder='Name', name='name')
+        .form-group
+          label.col-md-2.control-label(for='username') Username
+          .col-md-10
+            input#username.form-control(type='text', placeholder='Username', name='username')
+        .form-group
+          label.col-md-2.control-label(for='email') Email
+          .col-md-10
+            input#email.form-control(type='email', placeholder='Email', name='email')
+        .form-group
+          label.col-md-2.control-label(for='inputPassword') Password
+          .col-md-10
+            input#inputPassword.form-control(type='password', placeholder='Password', name='password')
+        .form-group
+          label.col-md-2.control-label(for='confirmPassword') Confirm Password
+          .col-md-10
+            input#confirmPassword.form-control(type='password', placeholder='Confirm Password', name='password2')
+        .form-group
+          label.col-md-2.control-label(for='profile') Profile
+          .col-md-10
+            input#profile.form-control(type='file', placeholder='Profile Picture', name='profileimage')
+        button.btn.btn-default(type='reset') Reset
+        button.btn.btn-primary(type='submit', name='submit') Register

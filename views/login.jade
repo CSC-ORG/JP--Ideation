@@ -1,18 +1,24 @@
 extends layout
 
 block content
-  .container.loginlayo.col-lg-12
-    h1 Login
-    p Please login below
-    ul.errors
-      if errors
-        each error, i in errors
-          li.alert.alert-danger #{error.msg}
-    form(method='post', action='login',enctype='multipart/form-data')
-      .form-group
-        label Username
-          input.form-control(name='username', type='text', placeholder='Enter a Username')
-      .form-group
-        label Password
-          input.form-control(name='password', type='password')
-      input.btn.btn-default(name='submit', type='submit', value='Login') 
+  !=messages()
+  ul.errors
+     if errors
+       each error, i in errors
+         .alert.alert-dismissible.alert-danger
+            button.close(type='button', data-dismiss='alert') ×
+            #{error.msg}
+  .container.well.col-lg-4.col-lg-offset-4.login
+    form.form-horizontal(action='login', method='post', enctype='multipart/form-data')
+      fieldset
+        legend.head #{title}
+        .form-group
+          label.col-md-2.control-label(for='username') Username
+          .col-md-10
+            input#username.form-control(type='text', name='username' ,placeholder='Username')
+        .form-group
+          label.col-md-2.control-label(for='inputPassword') Password
+          .col-md-10
+            input#inputPassword.form-control(type='password', name='password' ,placeholder='Password')
+        button.btn.btn-default(type='reset') Cancel
+        button.btn.btn-primary(type='submit' name='submit') Submit

@@ -7,9 +7,15 @@ a {
   color: #00B7FF;
 }*/
 
-p, h1 {
- font-family: 'Droid Sans', sans-serif;
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
+a {
+  color: #00B7FF;
+}
+
 
 /* custom */
 body {
@@ -64,33 +70,7 @@ a{
 	text-decoration: none;
 }
 
-/* Add form */
 
-
-input, select, textarea{
-	margin-bottom: 15px;
-}
-label{
-	display:inline-block;
-	width:180px;
-}
-
-input[type='text'], input[type='email'],select, textarea{
-	paddding:3px;
-	height:35px;
-	width:cover;
-	border:1px #ccc solid;
-}
-
-select{
-	height: 28px;
-}
-
-textarea{
-	height: 70px;
-	width:400px;
-}
-/* End Add form */
 
 
 /* Image inside the container */
@@ -136,17 +116,23 @@ ul.error li{
 /* Flash Messages end */
 
 /*Register and login layout fix */
-.layo{
-	margin-top: 50px;
-}
-.registerlayo{
-	margin-top: 50px;
-	margin-bottom: 30px;
+
+.login{
+	margin-top:130px;
 }
 
-.loginlayo{
-	margin-top: 50px;
-	margin-bottom:165px;
+.login .head{
+	text-align: center;
+}
+
+.register{
+	margin-top: 80px;
+
+}
+
+.register .head{
+	text-align: center;
+	
 }
 
 /*NAVIGATION*/
@@ -228,31 +214,6 @@ ul.error li{
 
 /* End Header */
 
-
-/* Footer */
-
-
-.footer {
- background-color:#242424;
- color:white;
- padding:30px 0 30px;
-}
-
-.footer h1 {
- font-family: 'Lato', sans-serif;
- font-size:1.5em;
-}
-
-.footer p {
- font-size:0.9em;
- color:#f2f2f2;
-}
-
-.footer a {
- color:#f2f2f2;
-}
-
-/* End Footer */
 
 
 /* comment form */

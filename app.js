@@ -8,8 +8,7 @@ var cookieParser = require('cookie-parser');
 //require modules
 var expressValidator = require('express-validator');
 var session = require('express-session');
-var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
+
 var bodyParser = require('body-parser');
 // File upload helper
 var multer = require('multer');
@@ -19,7 +18,10 @@ var flash = require('connect-flash');
 var mongo = require('mongodb');
 //var mongoose = require('mongoose');
 //var db = mongoose.connection;
-var db = require('monk')('mongodb://localhost/ideation');
+var db = require('monk')('localhost/ideation');
+// require passport and local startegy
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
 
 //Routes
 var routes = require('./routes/index');

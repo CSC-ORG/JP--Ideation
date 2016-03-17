@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-mongoose.connect('mongodb://localhost/ideation');
+mongoose.connect('localhost/ideation');
 
 var db = mongoose.connection;
 
@@ -11,6 +11,9 @@ var UserSchema = mongoose.Schema({
 	username: {
 		type: String,
 		index: true
+	},
+	type:{
+		type: String
 	},
 	password: {
 		type: String, 

@@ -87,6 +87,7 @@ router.post('/register', function (req, res,next){
 		var newUser = new User({
 			name: name,
 			email: email,
+			type: 'normal',
 			username: username,
 			password: password,
 			profileimage: profileImageName
@@ -239,6 +240,7 @@ router.post('/login', passport.authenticate('local', {
 	failureFlash:'Invalid Username or Password'
 }), function (req, res, next){
 	console.log('Authentication Successful');
+	console.log(req);
 	req.flash('success', 'You are logged in');
 	res.location('/');
 	res.redirect('/');

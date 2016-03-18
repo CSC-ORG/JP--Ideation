@@ -1,0 +1,51 @@
+extends adminlayout
+
+block content
+  nav.navbar.navbar-default.navbar-fixed-top.sidebar(role='navigation')
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-sidebar-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          
+        // Collect the nav links, forms, and other content for toggling
+        #bs-sidebar-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='/admin/adminindex')
+                | Home
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-home(style='font-size:16px;')
+            li
+              a(href='/admin/adminindex/users')
+                | Users
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-user(style='font-size:16px;')
+            li
+              a(href='/admin/adminindex/bycategory')
+                | Posts by Category
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
+            li
+              a(href='/admin/adminindex/addcategory')
+                | Add Category
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown')
+                | Settings 
+                span.caret
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-cog(style='font-size:16px;')
+              ul.dropdown-menu.forAnimate(role='menu')
+                li
+                  a(href='#') Action
+                li
+                  a(href='#') Another action
+                li
+                  a(href='#') Something else here
+                li.divider
+                li
+                  a(href='#') Separated link
+                li.divider
+                li
+                  a(href='#') One more separated link
+  !=messages()

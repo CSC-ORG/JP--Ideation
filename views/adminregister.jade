@@ -1,0 +1,32 @@
+extends adminlayout
+
+block content
+  !=messages()
+  ul.errors
+   if errors
+     each error, i in errors
+       .alert.alert-dismissible.alert-danger
+          button.close(type='button', data-dismiss='alert') ×
+          a #{error.msg}
+  .container.well.col-lg-6.col-lg-offset-3.register
+    form.form-horizontal(action='register', method='post' , enctype='multipart/form-data')
+      fieldset
+        legend.head #{title}
+        .form-group
+          label.col-md-2.control-label(for='name') Name
+          .col-md-10
+            input#name.form-control(type='text', placeholder='Name', name='name')
+        .form-group
+          label.col-md-2.control-label(for='email') Email
+          .col-md-10
+            input#email.form-control(type='email', placeholder='Email', name='email')
+        .form-group
+          label.col-md-2.control-label(for='inputPassword') Password
+          .col-md-10
+            input#inputPassword.form-control(type='password', placeholder='Password', name='password')
+        .form-group
+          label.col-md-2.control-label(for='confirmPassword') Confirm Password
+          .col-md-10
+            input#confirmPassword.form-control(type='password', placeholder='Confirm Password', name='password2')
+        button.btn.btn-primary(type='reset') Reset
+        button.btn.btn-primary(type='submit', name='submit') Register

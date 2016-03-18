@@ -5,9 +5,24 @@ block content
 	ul.errors
 		if errors
 			each error, i in errors
-				li.alert.alert-danger #{error.msg}
+				.alert.alert-dismissible.alert-danger
+						button.close(type='button', data-dismiss='alert') ×
+							  #{error.msg}
 	form(method='post', action='add', enctype="multipart/form-data")
 		.form-group
 			label Title:
 			input.form-control(name='title', type='text')
 		input.btn.btn-default(name='submit', type='submit', value='Save')
+
+	if categories
+		table.table.table-striped.table-hover.tablestyle
+			thead
+				tr.info
+					th Id
+					th Category
+			tbody
+				each category, i in categories
+					tr.success
+						td #{category._id}
+						td #{category.title}
+			   

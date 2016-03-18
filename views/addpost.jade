@@ -2,6 +2,7 @@ extends layout
 
 block content
 	h1=title
+	!=messages()
 	ul.errors
 		if errors
 			each error, i in errors

@@ -1,0 +1,58 @@
+doctype html
+html
+  head
+    title Zirine: #{title}
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-material-design.css')
+    link(rel='stylesheet', href='/stylesheets/ripples.css')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/icon?family=Material+Icons')
+    link(rel='stylesheet', href='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css')
+
+
+
+  body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-responsive-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='javascript:void(0)') Portal
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/admin/login') Login
+            li
+              a(href='/admin/register') Register
+          form.navbar-form.navbar-left
+            .form-group
+              input.form-control.col-md-8(type='text', placeholder='Search')
+          ul.nav.navbar-nav.navbar-right
+            li.dropdown
+              a.dropdown-toggle(href='bootstrap-elements.html', data-target='#', data-toggle='dropdown')
+                | Options
+                b.caret
+              ul.dropdown-menu
+                li
+                  a(href='/admin/profile') Profile
+                li
+                  a(href='javascript:void(0)') Settings
+                li.divider
+                li
+                  a(href='/admin/logout') Logout
+
+    block content
+
+
+  script(src='/javascripts/jquery.min.js')
+  script(src='/javascripts/ripples.js')
+  script(src='/javascripts/material.js')
+  script(src='/javascripts/script.js')
+  script(src='/javascripts/bootstrap.js')
+  script(src='//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js')
+  script
+    | $.material.init()

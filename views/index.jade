@@ -1,19 +1,28 @@
 extends layout
 
 block content
-    .container-fluid
-        .row.content
-            .col-sm-2.sidenav
-                ul.nav.nav.pills.nav-stacked
-                    li.active
+    nav.navbar.navbar-default.navbar-fixed-top.sidebar(role='navigation')
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-sidebar-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        // Collect the nav links, forms, and other content for toggling
+        #bs-sidebar-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+                    li
                       a(href="/posts/add") Add an Idea
-                    li.active
+                    li
                       a(href="/posts/myposts") My Ideas
                     if categories
                     each category, i in categories
                       li
                         a(href="/categories/show/#{category.title}") #{category.title}
-            .col-sm-9
+    !=messages()
+    .container.text-center.well
               if posts
               each post, i in posts
                  .post

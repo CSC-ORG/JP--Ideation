@@ -5,8 +5,10 @@ var moment = require('moment');
 var bodyParser = require('body-parser');
 
 var mongo = require('mongodb');
+var uri = 'mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation';
 var User = require('../models/user.js');
 var db = require('monk')('mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation');
+
 
 
 // require passport and local startegy
@@ -97,13 +99,13 @@ router.post('/login', function(req, res, next){
 	var users = db.get('users');
 	var name = req.body.name;
 	var password = req.body.password;
-	console.log('Admin Password  ' + password);
+	console.log('Admin Password   ' + password + '       Admin Name  '  + name);
 
-	users.findOne({
+	users.find({
 		type: 'admin', 
 		name: name
-	}, function(err, user){
-		console.log(user);
+	}, {}, function(err, user){
+		//console.log(user);
 		bcrypt.compare(password, user.password, function(err, matched){
 			if(err) throw err;
 			if(matched){

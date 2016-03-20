@@ -26,5 +26,6 @@
     "passport-local": "*",
     "bcrypt": "*",
     "mongoskin": "~1.3.20"
-  }
+  },
+  "engine": "node 0.10.25"
 }

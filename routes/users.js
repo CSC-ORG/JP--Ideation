@@ -5,7 +5,7 @@ var bcrypt = require('bcrypt');
 //var User = require('../models/user.js');
 var mongo = require('mongodb');
 var User = require('../models/user.js');
-var db = require('monk')('mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation');
+var db = require('monk')('sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation');
 
 // require passport and local startegy
 var passport = require('passport');

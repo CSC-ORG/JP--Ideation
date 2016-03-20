@@ -18,9 +18,9 @@ block content
                     li
                       a(href="/posts/myposts") My Ideas
                     if categories
-                    each category, i in categories
+                    each category, i in usercategories
                       li
-                        a(href="/categories/show/#{category.title}") #{category.title}
+                        a(href="/posts/bycategory/#{category.title}") #{category.title}
     !=messages()
     ul.errors
         if errors

@@ -15,9 +15,69 @@ router.get('/show/:id',ensureAuthenticated, function(req, res, next){
 	var db = req.db;
 	var user = req.user;
 	var posts = db.get('posts');
+
+		var titles= [];
+		var mycategory = req.user.category;
+		//console.log(mycategory);
+		for(i=0; i< mycategory.length; i++){
+			var temp = {};
+			temp.title = mycategory[i];
+			titles.push(temp);
+		}
 	posts.findById(req.params.id, function(err, post){
 		res.render('show', {
-			"post": post
+			"post": post,
+			usercategories: titles
+		});
+	});
+		
+});
+
+
+router.get('/bycategory/:category', function(req, res, next){
+	var posts = db.get('posts');
+
+	var titles= [];
+		var mycategory = req.user.category;
+		//console.log(mycategory);
+		for(i=0; i< mycategory.length; i++){
+			var temp = {};
+			temp.title = mycategory[i];
+			titles.push(temp);
+		}
+
+	posts.find({'category': req.params.category}, {}, function(err, posts){
+		res.render('index', {
+			posts: posts,
+			categories: titles
+		});
+	});
+
+});
+
+
+router.get('/myposts', function(req, res, next){
+	var db = req.db;
+	var user = req.user;
+	var posts = db.get('posts');
+	// posts.findById(req.params.id, function(err, post){
+	// 	res.render('show', {
+	// 		"post": post
+	// 	});
+	// });
+		var titles= [];
+		var mycategory = req.user.category;
+		//console.log(mycategory);
+		for(i=0; i< mycategory.length; i++){
+			var temp = {};
+			temp.title = mycategory[i];
+			titles.push(temp);
+		}
+
+	posts.find({'author': req.user.name}, {}, function(err, posts){
+		res.render('index', {
+			posts: posts,
+			categories: titles
 		});
 	});
 });

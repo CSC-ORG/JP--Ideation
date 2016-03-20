@@ -20,6 +20,8 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+
+
 router.get('/', function(req, res, next){
 	res.redirect('/admin/login');
 });
@@ -271,6 +273,71 @@ router.get('/adminindex/disapprove/:postid', function(req, res, next){
 
 
 	});
+});
+
+router.get('/adminindex/profile', function(req, res, next){
+	var user = admin;
+	res.render('adminprofile', {
+		"title": "Edit Profile",
+		user: user
+	});
+});
+
+router.post('/adminindex/profile', function (req, res, next){
+	//Get the form values
+	var name = req.body.name;
+	var email = req.body.email;
+	var password = req.body.password;
+	var password2 = req.body.password2;
+
+
+
+	//Form Validation
+	// Value and error
+	req.checkBody('name', 'Name field is required').notEmpty();
+	req.checkBody('email', 'Email field is required').notEmpty();
+	req.checkBody('email', 'Email not valid').isEmail();
+	req.checkBody('password', 'Password field is required').notEmpty();
+	req.checkBody('password2', 'Password do not match').equals(req.body.password);
+
+	//Check for errors
+	var errors = req.validationErrors();
+
+	if(errors){
+		res.render('profile', {
+			errors: errors,
+			name: name,
+			email: email,
+			username: username,
+			password: password,
+			password2: password2
+		});
+	}else{
+
+		var users = db.get('users');
+		bcrypt.hash(password, 10, function (err, hash){
+		if(err) throw err;
+		//Set hashed password
+		password = hash;
+		users.update({
+			email: email,
+			name: name
+		}, {
+			$set: {
+				password: password
+			}
+		}, function(err, user){
+			if(err) throw(err);
+			req.flash('success','Profile updated, You may log in');
+			res.location('/admin/adminindex');
+			res.redirect('/admin/adminindex');
+			
+		});
+
+	});
+		
+		
+	}
 });
 
 

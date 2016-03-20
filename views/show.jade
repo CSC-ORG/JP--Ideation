@@ -1,37 +1,57 @@
 extends layout
 
 block content
-	!=messages()
-	.show
-		h1= post.title
-		p.meta Posted in 
-				a(href='/categories/show/#{post.category}') #{post.category} by #{post.author} on #{moment(post.date).format("MM-DD-YYYY")}
-		img(src='/images/uploads/#{post.mainimage}')
-		!=post.body
-		br
-		hr
-		if post.comments
-			h3 Comments
-			each comment, i in post.comments
-				.comment
-					p.comment-name #{comment.name}
-					p.comment-text #{comment.body}
-			br
-		h3 Add Comment
-		if errors
-			ul.errors
-				each error, i in errors
-					li.alert.alert-danger #{error.msg}
-		form.comment-form(method='post', action='/posts/addcomment')
-			input(name="postid", type='hidden', value='#{post._id}')
-			.form-group
-				label Name
-				input.form-control(type='text', name='name' value='#{user.name}' readonly)
-			.form-group
-				label Email
-				input.form-control(type='email', name='email' value='#{user.email}' readonly)
-			.form-group
-				label Body
-				textarea.form-control(name='body', id='body')
-			br
-			input.btn.btn-default(name='submit', type='submit', value='Add Comment')
+    !=messages()
+    nav.navbar.navbar-default.navbar-fixed-top.sidebar(role='navigation')
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-sidebar-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        // Collect the nav links, forms, and other content for toggling
+        #bs-sidebar-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+                    li
+                      a(href="/posts/add") Add an Idea
+                    li
+                      a(href="/posts/myposts") My Ideas
+                    if categories
+                    each category, i in usercategories
+                      li
+                        a(href="/posts/bycategory/#{category.title}") #{category.title}
+    .container.well.col-lg-12.show
+        h1= post.title
+        p.meta Posted in 
+                a(href='/posts/bycategory/#{post.category}') #{post.category} by #{post.author} on #{moment(post.date).format("MM-DD-YYYY")}
+        img(src='/images/uploads/#{post.mainimage}')
+        !=post.body
+        br
+        hr
+        if post.comments
+            h3 Comments
+            each comment, i in post.comments
+                .comment
+                    p.comment-name #{comment.name}
+                    p.comment-text #{comment.body}
+            br
+        h3 Add Comment
+        if errors
+            ul.errors
+                each error, i in errors
+                    li.alert.alert-danger #{error.msg}
+        form.comment-form(method='post', action='/posts/addcomment')
+            input(name="postid", type='hidden', value='#{post._id}')
+            .form-group
+                label Name
+                input.form-control(type='text', name='name' value='#{user.name}' readonly)
+            .form-group
+                label Email
+                input.form-control(type='email', name='email' value='#{user.email}' readonly)
+            .form-group
+                label Body
+                textarea.form-control(name='body', id='body')
+            br
+            input.btn.btn-default(name='submit', type='submit', value='Add Comment')

@@ -16,6 +16,7 @@ function ensureAuthenticated(req, res, next){
 	res.redirect('/home');
 }
 
+
 router.get('/show/:category',ensureAuthenticated, function(req, res, next){
 	var db = req.db;
 	var posts = db.get('adminposts');
@@ -32,6 +33,7 @@ router.get('/show/:category',ensureAuthenticated, function(req, res, next){
 		});
 	});
 });
+
 
 router.get('/add', ensureAuthenticated, function(req, res, next) {
  	res.render('addcategory', {

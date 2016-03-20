@@ -238,10 +238,19 @@ router.post('/updateprofile',ensureAuthenticated, function (req, res, next){
 
 router.get('/updatecategory', function(req, res, next){
 		var categories = db.get('admincategories');
+		var titles= [];
+	    var mycategory = req.user.category;
+	    //console.log(mycategory);
+	    for(i=0; i< mycategory.length; i++){
+	      var temp = {};
+	      temp.title = mycategory[i];
+	      titles.push(temp);
+	    }
 		categories.find({},{}, function(err, categories){
 			res.render('updatecategory', {
 				user: req.user,
-				categories: categories
+				categories: categories,
+				usercategories: titles
 			});
 		});
 

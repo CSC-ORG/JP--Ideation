@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
-var db = require('monk')('mongodb://localhost/ideationn');
+var db = require('monk')('localhost/ideation');
 
 function ensureAuthenticated(req, res, next){
 	//Passport Authentication API
@@ -11,10 +11,10 @@ function ensureAuthenticated(req, res, next){
 	res.redirect('/home');
 }
 
-router.get('/show/:id', ensureAuthenticated, function(req, res, next){
+router.get('/show/:id',ensureAuthenticated, function(req, res, next){
 	var db = req.db;
 	var user = req.user;
-	var posts = db.get('adminposts');
+	var posts = db.get('posts');
 	posts.findById(req.params.id, function(err, post){
 		res.render('show', {
 			"post": post
@@ -24,15 +24,24 @@ router.get('/show/:id', ensureAuthenticated, function(req, res, next){
 
 
 router.get('/add', ensureAuthenticated, function (req, res, next){
-	var categories = db.get('admincategories');
-	var user = req.user;
+	
 	req.flash('info', 'All posts will be automatically deleted within 7 days. If you want to change the deletion date, please visit published post section after publishing the post.');
-	categories.find({}, {}, function (err, categories){
+		var titles= [];
+		var mycategory = req.user.category;
+		//console.log(mycategory);
+		for(i=0; i< mycategory.length; i++){
+			var temp = {};
+			temp.title = mycategory[i];
+			titles.push(temp);
+		}
+
+		//console.log(titles);
+		//return;
+
 		res.render('addpost', {
 			"title":"Add Idea",
-			"categories": categories
+			"categories": titles
 		});
-	});
 });
 
 
@@ -110,7 +119,7 @@ router.post('/addcomment', ensureAuthenticated, function(req, res, next){
 
 	// Check errors
 	var errors = req.validationErrors();
-	var posts = db.get('adminposts');
+	var posts = db.get('posts');
 	if(errors){
 		
 		posts.findById(postid, function(err, post){

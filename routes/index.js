@@ -13,16 +13,22 @@ function ensureAuthenticated(req, res, next){
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
-  var db = req.db;
-  var posts = db.get('adminposts');
-  var categories = db.get('admincategories');
+  //var db = req.db;
+  var posts = db.get('posts');
+  //var categories = db.get('admincategories');
+  var titles= [];
+    var mycategory = req.user.category;
+    //console.log(mycategory);
+    for(i=0; i< mycategory.length; i++){
+      var temp = {};
+      temp.title = mycategory[i];
+      titles.push(temp);
+    }
   posts.find({},{},function(err, posts){
     
-    categories.find({}, {}, function(err, categories){
       res.render('index', {
       'posts': posts,
-      'categories': categories
-      });
+      'categories': titles
     });
   });
 });

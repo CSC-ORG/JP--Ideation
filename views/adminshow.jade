@@ -1,7 +1,6 @@
 extends adminlayout
 
 block content
-    h1=title
     nav.navbar.navbar-default.navbar-fixed-top.sidebar(role='navigation')
       .container-fluid
         // Brand and toggle get grouped for better mobile display
@@ -56,21 +55,17 @@ block content
                 .alert.alert-dismissible.alert-danger
                         button.close(type='button', data-dismiss='alert') ×
                                 #{error.msg}
-    form.well(method='post', action='addcategory', enctype="multipart/form-data")
-        .form-group
-            label Title:
-            input.form-control(name='title', type='text')
-        input.btn.btn-default(name='submit', type='submit', value='Save')
-
-    if categories
-        table.table.table-striped.table-hover.tablestyle
-            thead
-                tr.info
-                    th Id
-                    th Category
-            tbody
-                each category, i in categories
-                    tr.success
-                        td #{category._id}
-                        td #{category.title}
-            
+    .show
+        h1= post.title
+        p.meta Posted in #{post.category} by #{post.author} on #{moment(post.date).format("MM-DD-YYYY")}
+        img(src='/images/uploads/#{post.mainimage}')
+        !=post.body
+        br
+        hr
+        if post.comments
+            h3 Comments
+            each comment, i in post.comments
+                .comment
+                    p.comment-name #{comment.name}
+                    p.comment-text #{comment.body}
+            br

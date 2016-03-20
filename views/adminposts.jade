@@ -56,13 +56,7 @@ block content
                 .alert.alert-dismissible.alert-danger
                         button.close(type='button', data-dismiss='alert') ×
                                 #{error.msg}
-    form.well(method='post', action='addcategory', enctype="multipart/form-data")
-        .form-group
-            label Title:
-            input.form-control(name='title', type='text')
-        input.btn.btn-default(name='submit', type='submit', value='Save')
-
-    if categories
+    if posts
         table.table.table-striped.table-hover.tablestyle
             thead
                 tr.info
@@ -73,4 +67,3 @@ block content
                     tr.success
                         td #{category._id}
                         td #{category.title}
-            

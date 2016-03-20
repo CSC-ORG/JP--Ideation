@@ -1,0 +1,39 @@
+extends layout
+
+block content
+    nav.navbar.navbar-default.navbar-fixed-top.sidebar(role='navigation')
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-sidebar-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        // Collect the nav links, forms, and other content for toggling
+        #bs-sidebar-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+                    li
+                      a(href="/posts/add") Add an Idea
+                    li
+                      a(href="/posts/myposts") My Ideas
+                    if categories
+                    each category, i in categories
+                      li
+                        a(href="/categories/show/#{category.title}") #{category.title}
+    !=messages()
+    ul.errors
+        if errors
+            each error, i in errors
+                .alert.alert-dismissible.alert-danger
+                        button.close(type='button', data-dismiss='alert') ×
+                                #{error.msg}
+
+    form.well(method='post', action='updatecategory', enctype="multipart/form-data")
+          legend Add Category
+            .form-group
+                label Category:
+                select.form-control(name='category')
+                 each category, i in categories
+                   option(value='#{category.title}') #{category.title}
+            input.btn.btn-default(name='submit', type='submit', value='Add')

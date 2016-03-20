@@ -5,7 +5,7 @@ var bcrypt = require('bcrypt');
 //var User = require('../models/user.js');
 var mongo = require('mongodb');
 var User = require('../models/user.js');
-var db = require('monk')('mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation');
+var db = require('monk')('localhost/ideation');
 
 // require passport and local startegy
 var passport = require('passport');
@@ -88,6 +88,7 @@ router.post('/register', function (req, res,next){
 			name: name,
 			email: email,
 			type: 'normal',
+			category:["Open"],
 			username: username,
 			password: password,
 			profileimage: profileImageName
@@ -102,8 +103,8 @@ router.post('/register', function (req, res,next){
 
 		//Success Message
 		req.flash('success', 'You are now registered and may log in');
-		res.location('/');
-		res.redirect('/');
+		res.location('/users/login');
+		res.redirect('/users/login');
 
 	}
 
@@ -233,6 +234,40 @@ router.post('/updateprofile',ensureAuthenticated, function (req, res, next){
 		
 	}
 });
+
+
+router.get('/updatecategory', function(req, res, next){
+		var categories = db.get('admincategories');
+		categories.find({},{}, function(err, categories){
+			res.render('updatecategory', {
+				user: req.user,
+				categories: categories
+			});
+		});
+
+});
+
+router.post('/updatecategory', function(req, res, next){
+		var category = req.body.category;
+		var users = db.get('users');
+
+		users.update({
+			"_id": req.user._id
+		},{
+			$push: {
+				'category': category
+			}
+		}, function(err, doc){
+			if(err) throw err;
+			else{
+				req.flash('success','Category Added');
+				res.location('/users/updatecategory');
+				res.redirect('/users/updatecategory');
+			}
+		});
+});
+
+
 
 //Post login route
 router.post('/login', passport.authenticate('local', {

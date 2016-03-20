@@ -39,47 +39,6 @@ router.get('/add', ensureAuthenticated, function(req, res, next) {
  	})
 });
 
-router.post('/add',ensureAuthenticated, function(req, res, next){
-	var title = req.body.title;
 
-	req.checkBody('title', 'Title Field is required').notEmpty();
-
-	var errors = req.validationErrors();
-
-	if(errors){
-		res.render('addcategory', {
-			"errors": errors,
-			"title": title
-		});
-	}else{
-		var categories = db.get('admincategories');
-	}
-
-	title = title.toLowerCase();
-	title = capitalizeFirstLetter(title);
-	//console.log(title);
-	categories.find({'title': title}, {}, function(err, category){
-			if(err) throw err;
-			if(category.length != 0){
-				req.flash('info', 'Category already exists, try submitting another category');
-				res.redirect('/categories/add');
-			}else{
-				//Submit to db
-				categories.insert({
-				"title": title
-				}, function (err, category){
-				if(err){
-					res.send('There was an issue adding the category');
-				}else{
-				req.flash('success','Category submitted');
-				res.location('/');
-				res.redirect('/');
-				}
-				});
-			}
-	});
-
-	
-});
 
 module.exports = router;

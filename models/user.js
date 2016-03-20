@@ -12,6 +12,9 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		index: true
 	},
+	category:{
+		type: []
+	},
 	type:{
 		type: String
 	},

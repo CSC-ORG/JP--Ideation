@@ -1,7 +1,6 @@
 extends adminlayout
 
 block content
-    h1=title
     nav.navbar.navbar-default.navbar-fixed-top.sidebar(role='navigation')
       .container-fluid
         // Brand and toggle get grouped for better mobile display
@@ -56,21 +55,38 @@ block content
                 .alert.alert-dismissible.alert-danger
                         button.close(type='button', data-dismiss='alert') ×
                                 #{error.msg}
-    form.well(method='post', action='addcategory', enctype="multipart/form-data")
-        .form-group
-            label Title:
-            input.form-control(name='title', type='text')
-        input.btn.btn-default(name='submit', type='submit', value='Save')
-
-    if categories
+    form.well(method='post', action='bycategory', enctype="multipart/form-data")
+          legend Admin Posts
+            .form-group
+                label Category:
+                select.form-control(name='category')
+                 each category, i in categories
+                   option(value='#{category.title}') #{category.title}
+            input.btn.btn-default(name='submit', type='submit', value='Show')
+    if posts
         table.table.table-striped.table-hover.tablestyle
             thead
                 tr.info
                     th Id
+                    th Title
                     th Category
+                    th Date
+                    th Author
+                    th Approve
+                    th Disapprove
             tbody
-                each category, i in categories
+                each post, i in posts
                     tr.success
-                        td #{category._id}
-                        td #{category.title}
-            
+                        td 
+                           a(href='/admin/adminindex/show/#{post._id}') 
+                              .conatiner #{post._id}
+                        td #{post.title}
+                        td #{post.category}
+                        td #{post.date}
+                        td #{post.author}
+                        td 
+                          a(href='/admin/adminindex/approve/#{post._id}') 
+                             .container.col-lg-2 Approve
+                        td 
+                           a(href='/admin/adminindex/disapprove/#{post._id}')
+                               .container.col-lg-2 Disapprove

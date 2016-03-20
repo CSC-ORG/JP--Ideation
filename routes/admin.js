@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 var mongo = require('mongodb');
 var User = require('../models/user.js');
-var db = require('monk')('localhost/ideation');
+var db = require('monk')('mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation');
 
 
 // require passport and local startegy

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-mongoose.connect('localhost/ideation');
+mongoose.connect('mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideationn');
 
 var db = mongoose.connection;
 

@@ -16,8 +16,6 @@ var flash = require('connect-flash');
 
 // Mongo stuff
 var mongo = require('mongodb');
-//var mongoose = require('mongoose');
-//var db = mongoose.connection;
 var uri = 'mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation';
 mongo.MongoClient.connect(uri, function(err, db){
 });

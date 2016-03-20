@@ -5,9 +5,8 @@ var moment = require('moment');
 var bodyParser = require('body-parser');
 
 var mongo = require('mongodb');
-var uri = 'mongodb://sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation';
 var User = require('../models/user.js');
-var db = require('monk')('sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation');
+var db = require('monk')('localhost/ideation');
 
 
 

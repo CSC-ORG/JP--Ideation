@@ -17,7 +17,7 @@ var flash = require('connect-flash');
 // Mongo stuff
 var mongo = require('mongodb');
 
-var db = require('monk')('sunnykarira:Grocklmfao123@ds019491.mlab.com:19491/ideation');
+var db = require('monk')('localhost/ideation');
 // require passport and local startegy
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;

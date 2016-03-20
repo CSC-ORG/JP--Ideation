@@ -97,6 +97,7 @@ router.post('/login', function(req, res, next){
 	var users = db.get('users');
 	var name = req.body.name;
 	var password = req.body.password;
+	console.log('Admin Password  ' + password);
 
 	users.findOne({
 		type: 'admin', 

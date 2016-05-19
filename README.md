@@ -31,11 +31,11 @@ together to do things together which could solve or create simplest idea which c
 
 ##User Manual/Configuration Document
 
-Download node.js and configure mongodb database.
+•Download node.js and configure mongodb database.
 <br>https://nodejs.org/en/download/
 <br>https://www.mongodb.com/download-center
-<br>The project repository is on the below mention link:
+<br>•The project repository is on the below mention link:
 <br>https://github.com/CSC-ORG/JP--Ideation
-<br>The project is live on the below mention link:
+<br>•The project is live on the below mention link:
 <br>http://zirine.herokuapp.com
 
